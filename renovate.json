@@ -1,0 +1,38 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":separateMultipleMajorReleases",
+    ":enableVulnerabilityAlertsWithLabel(security)",
+    "group:recommended"
+  ],
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "rebaseWhen": "behind-base-branch",
+  "prConcurrentLimit": 10,
+  "prHourlyLimit": 0,
+  "timezone": "Europe/Berlin",
+  "enabled": true,
+  "packageRules": [
+    {
+      "description": "Automerge safe updates for Gradle and GitHub Actions",
+      "matchManagers": ["gradle", "gradle-wrapper", "github-actions"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "description": "Group Gradle plugins together",
+      "matchManagers": ["gradle"],
+      "matchDepTypes": ["plugins"],
+      "groupName": "Gradle plugins"
+    },
+    {
+      "description": "Group Kotlin and Gradle ecosystem",
+      "matchPackagePatterns": ["^org.jetbrains.kotlin", "^org.gradle"],
+      "groupName": "Kotlin & Gradle ecosystem"
+    }
+  ]
+}

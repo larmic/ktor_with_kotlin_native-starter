@@ -1,0 +1,62 @@
+# syntax=docker/dockerfile:1.19
+
+# Multi-arch builder stage (will run on the requested --platform via buildx)
+# Linux ARM64 is not supported as build host by kotlin/nativ
+# we use AMD64 as build host
+# see https://kotlinlang.org/docs/native-target-support.html#tier-2
+# see https://youtrack.jetbrains.com/issue/KT-36871/Support-Aarch64-Linux-as-a-host-for-the-Kotlin-Native
+FROM --platform=linux/amd64 eclipse-temurin:24-jdk AS build
+ARG TARGETARCH
+
+# Install native toolchain for Kotlin/Native Linux builds
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+       ca-certificates curl unzip zip \
+       build-essential clang pkg-config zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+
+# Cache-friendly copy
+COPY gradle/wrapper/ gradle/wrapper/
+COPY gradlew gradlew
+COPY settings.gradle.kts settings.gradle.kts
+COPY build.gradle.kts build.gradle.kts
+RUN chmod +x gradlew
+
+# Pre-download Gradle wrapper and dependencies
+RUN ./gradlew --no-daemon --version
+
+# Copy the rest of the sources
+COPY src/ src/
+
+# Build release executable for current platform
+RUN set -eux; \
+    case "$TARGETARCH" in \
+        amd64) ./gradlew --no-daemon linkReleaseExecutableApp -PtargetOs="Linux" -PtargetArch="x86_64" ;; \
+        arm64) ./gradlew --no-daemon linkReleaseExecutableApp -PtargetOs="Linux" -PtargetArch="aarch64" ;; \
+        *) echo "Unsupported TARGETARCH: $TARGETARCH" && exit 1 ;; \
+    esac
+
+# Find produced binary (app.kexe) and rename to app
+RUN set -eux; \
+    bin_dir=$(find build/bin -type d -name "releaseExecutable" | head -n1); \
+    echo "Found binary in: $bin_dir"; \
+    ls -la "$bin_dir"; \
+    cp "$bin_dir"/app.kexe /out-app; \
+    chmod +x /out-app
+
+# Runtime image
+FROM alpine:3.20 AS runtime
+
+RUN apk add --no-cache gcompat libgcc libstdc++
+
+COPY --from=build /out-app /app
+
+EXPOSE 8080
+
+# Health check using native health endpoint with wget
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1
+
+ENTRYPOINT ["/app"]
