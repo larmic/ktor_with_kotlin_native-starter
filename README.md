@@ -9,6 +9,11 @@ This serves as a straightforward example illustrating how [Kotlin/Native](https:
 The ultimate goal is to achieve fully automated creation of a compact Docker image and its versioned
 transfer to Docker Hub.
 
+‼️Choosing the right runtime:
+- [Kotlin/Native](https://kotlinlang.org/docs/native-overview.html), with static compilation and limited Java library support, shines for IoT, iOS/mobile, embedded targets, and small tools.
+- For larger cloud-native apps, microservices, and serverless, prefer [GraalVM Native Image](https://www.graalvm.org/latest/reference-manual/native-image/).
+- When startup time is less critical, the [JVM's JIT](https://www.ibm.com/docs/de/sdk-java-technology/8?topic=reference-jit-compiler) and runtime optimizations make it ideal for enterprise systems, monoliths, and other long-running services.
+
 ## Technologies used
 * [Kotlin/Native](https://kotlinlang.org/docs/native-overview.html)
 * [Ktor](https://ktor.io/) server framework
