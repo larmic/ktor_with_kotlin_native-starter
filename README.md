@@ -1,6 +1,8 @@
 # kotlin_native-starter
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Gradle build](https://github.com/larmic/kotlin_native_starter/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/larmic/kotlin_native_starter/actions/workflows/gradle-build.yml)
+[![Docker build and push](https://github.com/larmic/kotlin_native_starter/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/larmic/kotlin_native_starter/actions/workflows/docker-build-push.yml)
 
 ## Overview
 This serves as a straightforward example illustrating how [Kotlin/Native](https://kotlinlang.org/docs/native-overview.html), [Ktor](https://ktor.io/), [Docker](https://www.docker.com/), [Docker Hub](https://hub.docker.com/) and [GitHub Actions](https://github.com/features/actions) can work seamlessly together.
