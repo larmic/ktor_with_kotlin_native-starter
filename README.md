@@ -43,26 +43,7 @@ transfer to Docker Hub.
 
 ## Makefile (build shortcuts)
 
-This project ships with a Makefile to simplify common tasks. Run `make` to see available targets.
-
-Key targets:
-- build-binary: Builds the native release binary for your host platform.
-- docker-build-amd: Builds an AMD64 Docker image (uses Docker Buildx, loads into local Docker).
-- docker-build-arm: Builds an ARM64 Docker image (uses Docker Buildx, loads into local Docker).
-- docker-run: Runs the image locally, exposes port 8080 and tails logs.
-- docker-stop: Stops the running container started by docker-run.
-- gradle-run: Runs the app on your host (debug) without Docker.
-
-Configurable variables:
-- IMAGE_NAME (default: larmic/kotlin-native-starter-example)
-- IMAGE_TAG (default: latest)
-- CONTAINER_NAME (default: larmic-kotlin-native-starter-example)
-
-Notes:
-- Docker Buildx is required for docker-build-* targets. Create a builder once if needed:
-  docker buildx create --name multiarch --use --bootstrap
-- The Dockerfile intentionally builds on linux/amd64 as the build host due to Kotlin/Native limitations (see Restrictions above),
-  but it will still produce linux/arm64 target images when invoked with the proper platform via Buildx.
+This project ships with a Makefile to simplify common tasks. Run [make](Makefile) to see available targets.
 
 ## Dockerfile notes
 
