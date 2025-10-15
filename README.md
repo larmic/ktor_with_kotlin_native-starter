@@ -1,8 +1,8 @@
 # Ktor using Kotlin/Native
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Gradle build](https://github.com/larmic/kotlin_native_starter/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/larmic/kotlin_native_starter/actions/workflows/gradle-build.yml)
-[![Docker build and push](https://github.com/larmic/kotlin_native_starter/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/larmic/kotlin_native_starter/actions/workflows/docker-build-push.yml)
+[![Gradle build](https://github.com/larmic/ktor_with_kotlin_native-starter/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/larmic/ktor_with_kotlin_native-starter/actions/workflows/gradle-build.yml)
+[![Docker build and push](https://github.com/larmic/ktor_with_kotlin_native-starter/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/larmic/ktor_with_kotlin_native-starter/actions/workflows/docker-build-push.yml)
 [![Docker hub image](https://img.shields.io/docker/image-size/larmic/kotlin_native-starter?label=dockerhub)](https://hub.docker.com/repository/docker/larmic/kotlin_native-starter)
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/larmic/kotlin_native-starter)
 
