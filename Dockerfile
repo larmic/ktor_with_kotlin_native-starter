@@ -49,9 +49,20 @@ RUN set -eux; \
 # Runtime image
 FROM alpine:3.22 AS runtime
 
+# Add minimal runtime deps
 RUN apk add --no-cache gcompat libgcc libstdc++
 
+# OCI labels for metadata
+LABEL org.opencontainers.image.title="kotlin_native-starter" \
+      org.opencontainers.image.description="Kotlin/Native + Ktor minimal HTTP server with Docker and GitHub Actions" \
+      org.opencontainers.image.source="https://github.com/larmic/kotlin_native_starter" \
+      org.opencontainers.image.licenses="Apache-2.0"
+
+# Copy binary
 COPY --from=build /out-app /app
+
+# Run as non-root user (minimal approach for static binaries)
+USER 10001:10001
 
 EXPOSE 8080
 

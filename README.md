@@ -41,9 +41,36 @@ transfer to Docker Hub.
 - Release: ./gradlew linkReleaseExecutableApp
 - Artifacts: build/bin/app/(debugExecutable|releaseExecutable)/app.kexe (Unix) or app.exe (Windows)
 
-## How to build this stuff?
+## Makefile (build shortcuts)
 
-See [Makefile](Makefile)!
+This project ships with a Makefile to simplify common tasks. Run `make` to see available targets.
+
+Key targets:
+- build-binary: Builds the native release binary for your host platform.
+- docker-build-amd: Builds an AMD64 Docker image (uses Docker Buildx, loads into local Docker).
+- docker-build-arm: Builds an ARM64 Docker image (uses Docker Buildx, loads into local Docker).
+- docker-run: Runs the image locally, exposes port 8080 and tails logs.
+- docker-stop: Stops the running container started by docker-run.
+- gradle-run: Runs the app on your host (debug) without Docker.
+
+Configurable variables:
+- IMAGE_NAME (default: larmic/kotlin-native-starter-example)
+- IMAGE_TAG (default: latest)
+- CONTAINER_NAME (default: larmic-kotlin-native-starter-example)
+
+Notes:
+- Docker Buildx is required for docker-build-* targets. Create a builder once if needed:
+  docker buildx create --name multiarch --use --bootstrap
+- The Dockerfile intentionally builds on linux/amd64 as the build host due to Kotlin/Native limitations (see Restrictions above),
+  but it will still produce linux/arm64 target images when invoked with the proper platform via Buildx.
+
+## Dockerfile notes
+
+- Multi-stage build: Uses a JVM-based build stage to compile the Kotlin/Native binary and a minimal Alpine runtime stage.
+- Security: The runtime now uses a non-root user and only installs minimal runtime libraries (gcompat, libgcc, libstdc++).
+- Metadata: Adds OCI image labels (title, description, source, license) for better registry visibility.
+- Healthcheck: Uses the app's /health endpoint.
+- Best practice: .dockerignore is included to reduce build context size and speed up builds.
 
 ## In-depth explanation
 
