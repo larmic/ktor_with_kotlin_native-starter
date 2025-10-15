@@ -53,8 +53,8 @@ FROM alpine:3.22 AS runtime
 RUN apk add --no-cache gcompat libgcc libstdc++
 
 # OCI labels for metadata
-LABEL org.opencontainers.image.title="kotlin_native-starter" \
-      org.opencontainers.image.description="Kotlin/Native + Ktor minimal HTTP server with Docker and GitHub Actions" \
+LABEL org.opencontainers.image.title="ktor_with_kotlin_native-starter" \
+      org.opencontainers.image.description="Ktor with Kotlin/Native server with Docker and GitHub Actions" \
       org.opencontainers.image.source="https://github.com/larmic/kotlin_native_starter" \
       org.opencontainers.image.licenses="Apache-2.0"
 

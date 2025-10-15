@@ -1,4 +1,4 @@
-# kotlin_native-starter
+# Ktor using Kotlin/Native
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Gradle build](https://github.com/larmic/kotlin_native_starter/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/larmic/kotlin_native_starter/actions/workflows/gradle-build.yml)

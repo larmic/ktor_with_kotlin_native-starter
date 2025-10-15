@@ -8,4 +8,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "kotlin_native-starter"
+rootProject.name = "ktor_with_kotlin_native-starter"
