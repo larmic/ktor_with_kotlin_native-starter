@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1.19
 
-# Multi-arch builder stage (will run on the requested --platform via buildx)
-# Linux ARM64 is not supported as build host by kotlin/nativ
-# we use AMD64 as build host
-# see https://kotlinlang.org/docs/native-target-support.html#tier-2
-# see https://youtrack.jetbrains.com/issue/KT-36871/Support-Aarch64-Linux-as-a-host-for-the-Kotlin-Native
+# ⚠️ IMPORTANT: We intentionally use linux/amd64 as build platform
+# because Kotlin/Native does not support linux/arm64 as build host (only as target).
+# BuildKit warning "FromPlatformFlagConstDisallowed" is expected and can be ignored.
+# See: https://kotlinlang.org/docs/native-target-support.html#tier-2
+# See: https://youtrack.jetbrains.com/issue/KT-36871
 FROM --platform=linux/amd64 eclipse-temurin:24-jdk AS build
 ARG TARGETARCH
 
