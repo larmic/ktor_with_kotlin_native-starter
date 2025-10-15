@@ -9,31 +9,32 @@ This serves as a straightforward example illustrating how [Kotlin/Native](https:
 The ultimate goal is to achieve fully automated creation of a compact Docker image and its versioned
 transfer to Docker Hub.
 
-## Used technologies
+## Technologies used
 * [Kotlin/Native](https://kotlinlang.org/docs/native-overview.html)
 * [Ktor](https://ktor.io/) server framework
 * [Gradle](https://gradle.org/) as build tool
 * [Docker](https://www.docker.com/) as application container
 * [Docker Hub](https://hub.docker.com/) as container registry
-* [GitHub Actions](https://github.com/features/actions) to automate CD/CD workflows (build docker application, push to registry,...)
+* [GitHub Actions](https://github.com/features/actions) to automate CI/CD workflows (build the Docker application, push to the registry,...)
 * [Renovate](renovate.json) for automatic dependency updates
 
 ## Requirements
 * [Local JDK 24 installation](https://openjdk.org/projects/jdk/24/) to build and run application without using docker for local debugging
 * [Local Docker installation](https://docs.docker.com/engine/install/) to build docker container from local machine
-* [Docker Hub account](https://hub.docker.com/signup) for automatically container upload to registry
-* [Installed Renovate GitHub App](https://github.com/apps/renovate) to support automatically dependency updates
+* [Docker Hub account](https://hub.docker.com/signup) for automatic container upload to the registry
+* [Installed Renovate GitHub App](https://github.com/apps/renovate) to support automatic dependency updates
 
 ## Restrictions
-* No [Java 25](https://openjdk.org/projects/jdk/25/) support yet because [Kotlin Multiplattform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-compatibility-guide.html) is not yet available for [Gradle 9.0](https://docs.gradle.org/current/userguide/compatibility.html) and the lower gradle versions does not support Java 25
+* No [Java 25](https://openjdk.org/projects/jdk/25/) support yet because [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-compatibility-guide.html) is not yet available for [Gradle 9.0](https://docs.gradle.org/current/userguide/compatibility.html), and lower Gradle versions do not support Java 25
 * [Dockerfile](Dockerfile) is using --platform=linux/amd64 as build host, because build host aarch64 is not supported by [Kotlin/Native](https://youtrack.jetbrains.com/issue/KT-36871/Support-Aarch64-Linux-as-a-host-for-the-Kotlin-Native)
+* Kotlin/Native does not include a JVM. Therefore, many Java libraries will not work. Only libraries that are explicitly Kotlin Multiplatform or those that can be integrated via C Interop are usable.
 
 ## Build on your current machine
 - Debug: ./gradlew linkDebugExecutableApp
 - Release: ./gradlew linkReleaseExecutableApp
 - Artifacts: build/bin/app/(debugExecutable|releaseExecutable)/app.kexe (Unix) or app.exe (Windows)
 
-## Docker Build (kurz)
+## Docker build (quick start)
 
 # ARM64
 docker buildx build --platform linux/arm64 -t kotlin_native-starter:arm64-test --load .
@@ -44,10 +45,10 @@ docker buildx build --platform linux/amd64 -t kotlin_native-starter:amd64-test -
 docker run --rm -p 8080:8080 kotlin_native-starter:amd64-test
 
 
-# Buildx-Builder erstellen (falls noch nicht vorhanden)
+# Create Buildx builder (if not already present)
 docker buildx create --name multiarch --use --bootstrap
 
-# Beide Architekturen bauen (ohne Push)
+# Build both architectures (without push)
 docker buildx build \
 --platform linux/amd64,linux/arm64 \
 -t larmic/kotlin_native-starter:test \
