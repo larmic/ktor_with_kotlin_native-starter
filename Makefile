@@ -26,9 +26,8 @@ docker-build-amd: ## Builds amd docker image
 	docker image prune -f
 
 ## —— Run application 🏃🏽————————————————————————————————————————————————————————————————————————————————————————
-go-run: ## Runs go without any container and uses configured env variable ${EXTERNAL_URL}
-	go mod download
-	EXTERNAL_URL=${EXTERNAL_URL} go run main.go
+gradle-run: ## Runs app without any container
+	./gradlew runDebug
 
 docker-run: ## Runs docker container and uses configured env variable ${EXTERNAL_URL}
 	@echo "Run docker container"

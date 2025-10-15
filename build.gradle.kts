@@ -63,3 +63,22 @@ kotlin {
         }
     }
 }
+
+// Custom task to run the debug executable on local maschine
+tasks.register<Exec>("runDebug") {
+    group = "application"
+    description = "Builds and runs the debug native executable"
+
+    dependsOn("linkDebugExecutableApp")
+
+    val executablePath = when {
+        hostOs.startsWith("Windows") -> "build/bin/app/debugExecutable/app.exe"
+        else -> "build/bin/app/debugExecutable/app.kexe"
+    }
+
+    commandLine(project.file(executablePath).absolutePath)
+
+    doFirst {
+        println("Starting native application in debug mode...")
+    }
+}

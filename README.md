@@ -41,23 +41,21 @@ transfer to Docker Hub.
 - Release: ./gradlew linkReleaseExecutableApp
 - Artifacts: build/bin/app/(debugExecutable|releaseExecutable)/app.kexe (Unix) or app.exe (Windows)
 
-## Docker build (quick start)
+## How to build this stuff?
 
-# ARM64
-docker buildx build --platform linux/arm64 -t kotlin_native-starter:arm64-test --load .
-docker run --rm -p 8080:8080 kotlin_native-starter:arm64-test
+See [Makefile](Makefile)!
 
-# AMD64
-docker buildx build --platform linux/amd64 -t kotlin_native-starter:amd64-test --load .
-docker run --rm -p 8080:8080 kotlin_native-starter:amd64-test
+## In-depth explanation
 
+### How to use this example
 
-# Create Buildx builder (if not already present)
-docker buildx create --name multiarch --use --bootstrap
+1. Fork this project to your own [GitHub](https://github.com/) space
+2. Add your personal [Docker Hub](https://hub.docker.com/) credentials to your repository
+![docker_hub_credentials](assets/docker_hub_credentials.png)
+3. Change _IMAGE_NAME_ in [GitHub Actions](.github/workflows/docker-build-push.yml) to your specific name
+4. Activate [Renovate](renovate.json) in your [GitHub](https://github.com/) repository to support automatically dependency updates. You may have to adapt the file [renovate.json](renovate.json) to your own needs
 
-# Build both architectures (without push)
-docker buildx build \
---platform linux/amd64,linux/arm64 \
--t larmic/kotlin_native-starter:test \
---load \
-.
+### Where are the unit tests?
+
+This is a simple illustration that shows the interaction between [Kotlin/Native](https://kotlinlang.org/docs/native-overview.html), [Ktor](https://ktor.io/), [Docker](https://www.docker.com/), [Docker Hub](https://hub.docker.com/) and [GitHub Actions](https://github.com/features/actions). Although the Dockerfile contains a phase that executes the
+(non-existent) tests, tests were omitted for the demo due to time constraints.
