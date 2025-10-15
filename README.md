@@ -1,10 +1,30 @@
 # kotlin_native-starter
 
-## Requirements (host)
-- JDK 24, Plus native toolchain for your OS:
-  - macOS: Xcode Command Line Tools
-  - Linux: clang, build-essential, zlib dev
-  - Windows: MSVC (VS Build Tools) + Windows SDK
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Overview
+This serves as a straightforward example illustrating how [Kotlin/Native](https://kotlinlang.org/docs/native-overview.html), [Ktor](https://ktor.io/), [Docker](https://www.docker.com/), [Docker Hub](https://hub.docker.com/) and [GitHub Actions](https://github.com/features/actions) can work seamlessly together.
+The ultimate goal is to achieve fully automated creation of a compact Docker image and its versioned
+transfer to Docker Hub.
+
+## Used technologies
+* [Kotlin/Native](https://kotlinlang.org/docs/native-overview.html)
+* [Ktor](https://ktor.io/) server framework
+* [Gradle](https://gradle.org/) as build tool
+* [Docker](https://www.docker.com/) as application container
+* [Docker Hub](https://hub.docker.com/) as container registry
+* [GitHub Actions](https://github.com/features/actions) to automate CD/CD workflows (build docker application, push to registry,...)
+* [Renovate](renovate.json) for automatic dependency updates
+
+## Requirements
+* [Local JDK 24 installation](https://openjdk.org/projects/jdk/24/) to build and run application without using docker for local debugging
+* [Local Docker installation](https://docs.docker.com/engine/install/) to build docker container from local machine
+* [Docker Hub account](https://hub.docker.com/signup) for automatically container upload to registry
+* [Installed Renovate GitHub App](https://github.com/apps/renovate) to support automatically dependency updates
+
+## Restrictions
+* No [Java 25](https://openjdk.org/projects/jdk/25/) support yet because [Kotlin Multiplattform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-compatibility-guide.html) is not yet available for [Gradle 9.0](https://docs.gradle.org/current/userguide/compatibility.html) and the lower gradle versions does not support Java 25
+* [Dockerfile](Dockerfile) is using --platform=linux/amd64 as build host, because build host aarch64 is not supported by [Kotlin/Native](https://youtrack.jetbrains.com/issue/KT-36871/Support-Aarch64-Linux-as-a-host-for-the-Kotlin-Native)
 
 ## Build on your current machine
 - Debug: ./gradlew linkDebugExecutableApp
