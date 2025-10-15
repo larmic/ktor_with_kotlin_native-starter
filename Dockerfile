@@ -47,7 +47,7 @@ RUN set -eux; \
     chmod +x /out-app
 
 # Runtime image
-FROM alpine:3.20 AS runtime
+FROM alpine:3.22 AS runtime
 
 RUN apk add --no-cache gcompat libgcc libstdc++
 
