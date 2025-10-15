@@ -26,10 +26,20 @@ transfer to Docker Hub.
 * [Renovate](renovate.json) for automatic dependency updates
 
 ## Requirements
-* [Local JDK 24 installation](https://openjdk.org/projects/jdk/24/) to build and run application without using docker for local debugging
-* [Local Docker installation](https://docs.docker.com/engine/install/) to build docker container from local machine
-* [Docker Hub account](https://hub.docker.com/signup) for automatic container upload to the registry
+* [Local JDK 24 installation](https://openjdk.org/projects/jdk/24/) to build and run the application without Docker for local debugging
+* [Local Docker installation](https://docs.docker.com/engine/install/) to build Docker images from your machine
+* [Docker Hub account](https://hub.docker.com/signup) for automatic image upload to the registry
 * [Installed Renovate GitHub App](https://github.com/apps/renovate) to support automatic dependency updates
+* Platform prerequisites for local native builds (only needed if you build/run outside Docker):
+  - macOS: Install Xcode Command Line Tools (xcode-select --install). Apple Silicon and Intel are supported host platforms. See target support below.
+  - Linux: Ensure a basic native toolchain is available (clang/llvm, make, and zlib headers). Example (Debian/Ubuntu): sudo apt-get install -y build-essential clang zlib1g-dev. Example (Fedora/RHEL): sudo dnf install -y make clang zlib-devel.
+  - Windows: Install MSYS2 and the MinGW-w64 toolchain. Follow https://www.msys2.org/, then install packages: pacman -S --needed mingw-w64-x86_64-clang mingw-w64-x86_64-zlib make. Use the "MSYS2 MinGW x64" shell or ensure the MinGW bin directory is on PATH.
+* Cross-compilation note: Building Linux binaries from non-Linux hosts locally can be tricky. Prefer the provided Dockerfile and Buildx targets to produce Linux images (see Makefile and Dockerfile notes below).
+
+Further reading (official docs):
+- Kotlin/Native overview: https://kotlinlang.org/docs/native-overview.html
+- Supported targets and host platforms: https://kotlinlang.org/docs/native-target-support.html
+- Set up and build with Gradle: https://kotlinlang.org/docs/native-using-gradle.html
 
 ## Restrictions
 * No [Java 25](https://openjdk.org/projects/jdk/25/) support yet because [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-compatibility-guide.html) is not yet available for [Gradle 9.0](https://docs.gradle.org/current/userguide/compatibility.html), and lower Gradle versions do not support Java 25
