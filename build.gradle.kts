@@ -49,10 +49,10 @@ kotlin {
     sourceSets {
         val appMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-server-core:3.3.1")
-                implementation("io.ktor:ktor-server-cio:3.3.1")
-                implementation("io.ktor:ktor-server-content-negotiation:3.3.1")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:3.3.1")
+                implementation("io.ktor:ktor-server-core:3.3.2")
+                implementation("io.ktor:ktor-server-cio:3.3.2")
+                implementation("io.ktor:ktor-server-content-negotiation:3.3.2")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:3.3.2")
             }
         }
 
