@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.19
+# syntax=docker/dockerfile:1.20
 
 # ⚠️ IMPORTANT: We intentionally use linux/amd64 as build platform
 # because Kotlin/Native does not support linux/arm64 as build host (only as target).
