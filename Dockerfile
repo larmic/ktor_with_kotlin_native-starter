@@ -5,7 +5,7 @@
 # BuildKit warning "FromPlatformFlagConstDisallowed" is expected and can be ignored.
 # See: https://kotlinlang.org/docs/native-target-support.html#tier-2
 # See: https://youtrack.jetbrains.com/issue/KT-36871
-FROM --platform=linux/amd64 eclipse-temurin:24-jdk AS build
+FROM --platform=linux/amd64 eclipse-temurin:25.0.1_8-jdk AS build
 ARG TARGETARCH
 
 # Install native toolchain for Kotlin/Native Linux builds
